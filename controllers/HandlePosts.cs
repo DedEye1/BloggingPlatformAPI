@@ -1,16 +1,19 @@
 using BloggingPlatformAPI.classes;
+using BloggingPlatformAPI.entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BloggingPlatformAPI.controllers;
 
 [ApiController]
 [Route("/posts", Name = "HandlePosts")]
-public class HandlePosts : ControllerBase
+public class HandlePosts(BlogDbContext context) : ControllerBase
 {
+  private readonly BlogDbContext _context = context;
+
   [HttpGet("{id}")]
   public IActionResult GetPostsByID(int id, [FromQuery] string term)
   {
-    return Ok();
+    return Ok(_context.Database.CanConnect());
   }
 
   [HttpGet]

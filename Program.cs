@@ -1,3 +1,5 @@
+using BloggingPlatformAPI.classes;
+using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
 namespace BloggingPlatformAPI;
@@ -10,8 +12,10 @@ public class Program
         builder.Services.AddOpenApi();
         builder.Services.AddControllers();
 
+        string? connectionStr = builder.Configuration.GetConnectionString("DefaultConnection");
+        builder.Services.AddDbContext<BlogDbContext>(options => options.UseNpgsql(connectionStr).UseSnakeCaseNamingConvention());
+
         var app = builder.Build();
-        app.Configuration.GetConnectionString("DefaultConnection");
         app.MapControllers();
         if (app.Environment.IsDevelopment())
         {
