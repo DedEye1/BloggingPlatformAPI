@@ -8,8 +8,10 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         builder.Services.AddOpenApi();
+        builder.Services.AddControllers();
 
         var app = builder.Build();
+        app.Configuration.GetConnectionString("DefaultConnection");
         app.MapControllers();
         if (app.Environment.IsDevelopment())
         {
