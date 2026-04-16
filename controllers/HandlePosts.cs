@@ -11,31 +11,31 @@ public class HandlePosts(BlogDbContext context) : ControllerBase
   private readonly BlogDbContext _context = context;
 
   [HttpGet("{id}")]
-  public IActionResult GetPostsByID(int id, [FromQuery] string term)
+  public IActionResult GetBlogsByID(int id, [FromQuery] string term)
   {
     return Ok(_context.Database.CanConnect());
   }
 
   [HttpGet]
-  public IActionResult GetAllPosts([FromQuery] string term)
+  public IActionResult GetAllBlogs([FromQuery] string term)
   {
     return Ok();
   }
 
   [HttpPost]
-  public IActionResult CreatePost([FromBody] Blog blog)
+  public IActionResult PostBlog([FromBody] Blog blog)
   {
     return Created();
   }
 
   [HttpPut]
-  public IActionResult UpdatePost([FromBody] Blog blog)
+  public IActionResult PutBlog([FromBody] Blog blog)
   {
     return Ok();
   }
 
   [HttpDelete("{id}")]
-  public IActionResult DeletePostByID(int id)
+  public IActionResult DeleteBlogByID(int id)
   {
     return NoContent();
   }
