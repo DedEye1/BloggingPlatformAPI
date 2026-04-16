@@ -6,6 +6,9 @@ endif
 all:
 	dotnet run
 
+run_local:
+	dotnet run --urls "http://0.0.0.0:5000"
+
 add_migrations:
 	dotnet-ef migrations add DbMigration
 
