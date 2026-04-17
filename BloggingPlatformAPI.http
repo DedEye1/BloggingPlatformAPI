@@ -1,18 +1,27 @@
 @BloggingPlatformAPI_HostAddress = http://localhost:5199
 
-### 1. POST создать блог
+### POST создать блог
 
 POST {{BloggingPlatformAPI_HostAddress}}/posts
 Content-Type: application/json
 
 {
-  "title": "My First Blog Post",
-  "content": "This is the content of my first blog post.",
-  "category": "Technology",
-  "tags": ["Tech", "Programming"]
+  "title": "Cake recipe",
+  "content": "Two eggs. That's all",
+  "category": "Cooking",
+  "tags": ["Cake", "Baking"]
 }
 
-### 2. GET получить блог по ID
+### GET получить блог по ID
 
-GET {{BloggingPlatformAPI_HostAddress}}/posts/1
+GET {{BloggingPlatformAPI_HostAddress}}/posts/4
 Accept: application/json
+
+### GET получить все блоги
+
+GET {{BloggingPlatformAPI_HostAddress}}/posts
+Accept: application/json
+
+### DELETE удалить блог по ID
+
+DELETE {{BloggingPlatformAPI_HostAddress}}/posts/1

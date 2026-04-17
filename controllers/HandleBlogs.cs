@@ -13,25 +13,15 @@ public class HandleBlogs(BlogDbContext context) : ControllerBase
   [HttpGet("{id}")]
   public IActionResult GetBlogByID(int id)
   {
-    IActionResult result;
     Blog? blog = _context.GetBlogByID(id);
-
-    if (blog is null) result = NotFound();
-    else result = Ok(blog);
-
-    return result;
+    return blog is null ? NotFound() : Ok(blog);
   }
 
   [HttpGet]
   public IActionResult GetAllBlogs([FromQuery] string? term)
   {
-    IActionResult result;
     Blog[]? blogs = _context.GetAllBlogs(term);
-
-    if (blogs is null) result = NotFound();
-    else result = Ok(blogs);
-
-    return result;
+    return blogs.Length == 0 ? NotFound() : Ok(blogs);
   }
 
   [HttpPost]
@@ -50,12 +40,7 @@ public class HandleBlogs(BlogDbContext context) : ControllerBase
   [HttpDelete("{id}")]
   public IActionResult DeleteBlogByID(int id)
   {
-    IActionResult result;
     bool isDeleted = _context.DeleteBlog(id);
-
-    if (isDeleted) result = NoContent();
-    else result = NotFound();
-
-    return result;
+    return isDeleted ? NoContent() : NotFound();
   }
 }

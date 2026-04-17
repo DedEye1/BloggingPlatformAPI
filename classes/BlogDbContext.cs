@@ -9,9 +9,14 @@ public class BlogDbContext(DbContextOptions options) : DbContext(options)
 
   public Blog? GetBlogByID(int id) => Blogs.Find(id);
 
-  public Blog[]? GetAllBlogs(string? term)
+  public Blog[] GetAllBlogs(string? term)
   {
-    return Blogs.ToArray();
+    Blog[] result = Blogs.ToArray();
+    if (term is not null)
+    {
+      result = Blogs.Where(b => b.Tags.Contains(term)).ToArray();
+    }
+    return result;
   }
 
   public void AddBlog(Blog blog)
