@@ -4,7 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace BloggingPlatformAPI.entities;
 
 [Table("Blogs")]
-public class Blog(string title, string content, string category, string[] tags, DateTimeOffset? updatedAt)
+public class Blog(string title, string content, string category, string[] tags,
+  DateTimeOffset? updatedAt)
 {
   [Key]
   [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
