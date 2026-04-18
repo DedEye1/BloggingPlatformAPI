@@ -1,27 +1,83 @@
 @BloggingPlatformAPI_HostAddress = http://localhost:5199
 
-### POST создать блог
+### POST создать блог - Created
 
 POST {{BloggingPlatformAPI_HostAddress}}/posts
 Content-Type: application/json
 
 {
-  "title": "Cake recipe",
-  "content": "Two eggs. That's all",
-  "category": "Cooking",
-  "tags": ["Cake", "Baking"]
+  "title": "University",
+  "content": "I've been applied to University",
+  "category": "Studying",
+  "tags": ["Studying", "University"]
 }
 
-### GET получить блог по ID
+### POST создать блог - Bad Request
 
-GET {{BloggingPlatformAPI_HostAddress}}/posts/4
-Accept: application/json
+POST {{BloggingPlatformAPI_HostAddress}}/posts
+Content-Type: application/json
 
-### GET получить все блоги
+{
+  "title": "University",
+  "category": "Studying",
+  "tags": ["Studying", "University"]
+}
+
+### GET получить все блоги - OK (Not Found, если отсутствуют блоги)
 
 GET {{BloggingPlatformAPI_HostAddress}}/posts
 Accept: application/json
 
-### DELETE удалить блог по ID
+### GET получить блог по ID - OK
+
+GET {{BloggingPlatformAPI_HostAddress}}/posts/4
+Accept: application/json
+
+### GET получить блог по ID - Not Found
+
+GET {{BloggingPlatformAPI_HostAddress}}/posts/1
+Accept: application/json
+
+### PUT обновить по ID - OK
+
+PUT {{BloggingPlatformAPI_HostAddress}}/posts/4
+Content-Type: application/json
+
+{
+  "title": "My Updated Blog Post",
+  "content": "This is the updated content of my first blog post.",
+  "category": "Technology",
+  "tags": ["Tech", "Programming"]
+}
+
+### PUT обновить по ID - Bad Request
+
+PUT {{BloggingPlatformAPI_HostAddress}}/posts/4
+Content-Type: application/json
+
+{
+  "title": "My Updated Blog Post",
+  "content": "This is the updated content of my first blog post.",
+  "another": "",
+  "tags": ["Tech", "Programming"]
+}
+
+### PUT обновить по ID - Not Found
+
+PUT {{BloggingPlatformAPI_HostAddress}}/posts/1
+Content-Type: application/json
+
+{
+  "title": "My Updated Blog Post",
+  "content": "This is the updated content of my first blog post.",
+  "category": "Technology",
+  "tags": ["Tech", "Programming"]
+}
+
+### DELETE удалить блог по ID - Not Found
 
 DELETE {{BloggingPlatformAPI_HostAddress}}/posts/1
+
+### DELETE удалить блог по ID - No Content
+
+DELETE {{BloggingPlatformAPI_HostAddress}}/posts/7

@@ -13,28 +13,29 @@ public class HandleBlogs(BlogDbContext context) : ControllerBase
   [HttpGet("{id}")]
   public IActionResult GetBlogByID(int id)
   {
-    Blog? blog = _context.GetBlogByID(id);
+    Blog? blog = _context.ReadBlogByID(id);
     return blog is null ? NotFound() : Ok(blog);
   }
 
   [HttpGet]
   public IActionResult GetAllBlogs([FromQuery] string? term)
   {
-    Blog[]? blogs = _context.GetAllBlogs(term);
+    Blog[]? blogs = _context.ReadAllBlogs(term);
     return blogs.Length == 0 ? NotFound() : Ok(blogs);
   }
 
   [HttpPost]
   public IActionResult PostBlog([FromBody] Blog blog)
   {
-    _context.AddBlog(blog);
+    _context.CreateBlog(blog);
     return Created();
   }
 
-  [HttpPut]
-  public IActionResult PutBlog([FromBody] Blog blog)
+  [HttpPut("{id}")]
+  public IActionResult PutBlog(int id, [FromBody] Blog blog)
   {
-    return Ok();
+    bool isUpdated = _context.UpdateBlog(id, blog);
+    return isUpdated ? Ok() : NotFound();
   }
 
   [HttpDelete("{id}")]

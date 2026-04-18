@@ -7,11 +7,17 @@ public class BlogDbContext(DbContextOptions options) : DbContext(options)
 {
   public DbSet<Blog> Blogs { get; set; }
 
-  public Blog? GetBlogByID(int id) => Blogs.Find(id);
-
-  public Blog[] GetAllBlogs(string? term)
+  public void CreateBlog(Blog blog)
   {
-    Blog[] result = Blogs.ToArray();
+    Blogs.Add(blog);
+    SaveChanges();
+  }
+
+  public Blog? ReadBlogByID(int id) => Blogs.Find(id);
+
+  public Blog[] ReadAllBlogs(string? term)
+  {
+    Blog[] result = Blogs.OrderBy(b => b.ID).ToArray();
     if (term is not null)
     {
       result = Blogs.Where(b => b.Tags.Contains(term)).ToArray();
@@ -19,16 +25,27 @@ public class BlogDbContext(DbContextOptions options) : DbContext(options)
     return result;
   }
 
-  public void AddBlog(Blog blog)
+  public bool UpdateBlog(int id, Blog updatedBlog)
   {
-    Blogs.Add(blog);
-    SaveChanges();
+    bool isUpdated = false;
+    Blog? blog = ReadBlogByID(id);
+    if (blog is not null)
+    {
+      blog.Title = updatedBlog.Title;
+      blog.Content = updatedBlog.Content;
+      blog.Category = updatedBlog.Category;
+      blog.Tags = updatedBlog.Tags;
+      blog.UpdatedAt = DateTimeOffset.UtcNow;
+      SaveChanges();
+      isUpdated = true;
+    }
+    return isUpdated;
   }
 
   public bool DeleteBlog(int id)
   {
-    Blog? blog = GetBlogByID(id);
     bool isDeleted = false;
+    Blog? blog = ReadBlogByID(id);
     if (blog is not null)
     {
       Blogs.Remove(blog);
